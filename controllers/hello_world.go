@@ -1,14 +1,28 @@
 package controllers
 
 import (
+	"fmt"
+	"go-crud/app"
 	"net/http"
 )
 
-type AppData struct {
-	DataId  string `db:"data_id"`
-	Message string `db:"message"`
+// AppEnv holds database Repo
+type AppEnv struct {
+	repo *app.AppRepo
 }
 
-func HelloWorld(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello World!"))
+func NewAppEnv(repo *app.AppRepo) *AppEnv {
+	return &AppEnv{
+		repo: repo,
+	}
+}
+
+func (env *AppEnv) HelloWorld(w http.ResponseWriter, r *http.Request) {
+	data, err := env.repo.FindAppDataByID(1)
+
+	if err != nil {
+		fmt.Println("Error", data)
+	}
+
+	w.Write([]byte(data.Message))
 }
