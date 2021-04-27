@@ -5,11 +5,14 @@ import (
 )
 
 type AppRepo struct {
-	db *pgxpool.Pool
+	// Register models in the Repo so that they can be queried via DB pool
+	AppData *AppDataModel
 }
 
-func NewAppRepo(db *pgxpool.Pool) *AppRepo {
+func NewAppRepo(dbConnPool *pgxpool.Pool) *AppRepo {
+	appData := NewAppDataModel(dbConnPool)
+
 	return &AppRepo{
-		db: db,
+		AppData: appData,
 	}
 }

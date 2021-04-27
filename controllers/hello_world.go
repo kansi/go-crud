@@ -11,14 +11,14 @@ type AppEnv struct {
 	repo *app.AppRepo
 }
 
-func NewAppEnv(repo *app.AppRepo) *AppEnv {
+func NewAppEnv(appRepo *app.AppRepo) *AppEnv {
 	return &AppEnv{
-		repo: repo,
+		repo: appRepo,
 	}
 }
 
 func (env *AppEnv) HelloWorld(w http.ResponseWriter, r *http.Request) {
-	data, err := env.repo.FindAppDataByID(1)
+	data, err := env.repo.AppData.FindAppDataByID(1)
 
 	if err != nil {
 		fmt.Println("Error", data)
